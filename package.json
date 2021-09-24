@@ -1,0 +1,32 @@
+{
+  "name": "exam-ms-tested",
+  "version": "1.0.0",
+  "description": "Servicio para presentación y administración de examanes en tested",
+  "main": "server.js",
+  "author": "tested",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/graphql": "^14.5.0",
+    "@types/node": "^16.9.6",
+    "nodemon": "^2.0.12",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
+  },
+  "scripts": {
+    "start": "node dist/server.js",
+    "build": "tsc",
+    "test": "jest",
+    "test:watch": "jest --verbose --detectOpenHandles",
+    "start:dev": "yarn run build:dev",
+    "build:dev": "nodemon src/server.ts --exec ts-node src/server.ts -e ts,graphql"
+  },
+  "dependencies": {
+    "@graphql-tools/graphql-file-loader": "^7.1.0",
+    "@graphql-tools/load": "^7.3.2",
+    "@graphql-tools/schema": "^8.2.0",
+    "apollo-server": "^3.3.0",
+    "dotenv": "^10.0.0",
+    "graphql": "^15.6.0",
+    "mongoose": "^6.0.7"
+  }
+}

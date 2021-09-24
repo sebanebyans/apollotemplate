@@ -1,0 +1,4 @@
+yarn add typescript nodemon ts-node --dev
+yarn tsc --init --rootDir src --outDir dist --lib dom,es6 --module commonjs --removeComments 
+yarn add apollo-server graphql @graphql-tools/schema moongose
+yarn add @types/graphql @types/node --dev
