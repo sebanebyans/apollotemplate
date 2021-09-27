@@ -6,10 +6,9 @@ import { connection } from './database/connection';
 import examModel from './database/models/exam';
 dotenv.config();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
-const startServer = async () => {
-  console.log(path.resolve("./"));
+const startServer = async () => { 
   await connection();
   const server = new ApolloServer({
     schema,
