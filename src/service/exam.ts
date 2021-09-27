@@ -15,7 +15,6 @@ export const list = async (pagination: any, limit: number) => {
   // eslint-disable-next-line no-useless-catch
   try {
     const query = { ...{ enabled: true }, ...pagination };
-
     let exams = await ExamModel.find(query)
       .sort({ _id: -1 })
       .limit(limit + 1);
@@ -44,6 +43,7 @@ export const search = async (pagination: any, limit: number, text: string) => {
       ...{ enabled: true },
       ...pagination,
       $or: [
+        { title: { $regex: text, $options: 'i' } },
         { title: { $regex: text, $options: 'i' } },
         { searchTags: { $regex: text, $options: 'i' } },
         { category: { $regex: text, $options: 'i' } },

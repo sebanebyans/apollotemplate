@@ -1,4 +1,5 @@
-import { ApolloServer } from 'apollo-server';
+import   express from "express";
+import { ApolloServer } from "apollo-server-express";
 import dotenv from 'dotenv';
 import schema from './graphql/schema';
 import connection from './database/connection';
@@ -7,15 +8,23 @@ dotenv.config();
 
 const PORT = process.env.PORT || 8080;
 
-const startServer = async () => {
+async function startServer() {
+  const app = express();
   await connection();
-  const server = new ApolloServer({
-    schema,
+  const apolloServer = new ApolloServer({
+   schema
   });
 
-  server.listen(PORT, (): void => console.log(
-    `🚀GraphQL-Server is running on http://localhost:${PORT}/graphql`,
-  ));
-};
+  await apolloServer.start();
+  apolloServer.applyMiddleware({app});
+  app.use(express.json());
+
+  app.get('/',({res}:any)=> {
+    console.log('get');
+    res.status(200).send({msg: 'Hello World!'});
+  });
+
+  app.listen(PORT, () => console.log(`running on ${PORT}`));
+}
 
 startServer();

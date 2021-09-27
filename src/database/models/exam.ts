@@ -1,47 +1,44 @@
-import {IExam} from '../../domain/Interfaces/IExam';
-import { Schema, model } from 'mongoose';
+import { Schema, model } from "mongoose";
+import { IExam } from "../../domain/Interfaces/IExam";
 
-
-
-const ExamSchema = new Schema<IExam>({
+const ExamSchema = new Schema<IExam>(
+  {
     title: {
-        type: String,      
+      type: String,
     },
     price: {
-        type: Number,
-       
+      type: Number,
     },
     description: {
-        type:String,       
+      type: String,
     },
     resultTime: {
-        type:String,
-        
+      type: String,
     },
     code: {
-        type:String,
-        unique:true        
+      type: String,
+      unique: true,
     },
     searchTags: [String],
-    tags:[String],
+    tags: [String],
     category: {
-                type:String, 
-        
+      type: String,
     },
-    reason:{
-        type:String,       
+    reason: {
+      type: String,
     },
-    enabled : {
-        type: Boolean,
-        default: true       
+    enabled: {
+      type: Boolean,
+      default: true,
     },
-    highlight : {
-        type: Boolean,
-        default: false
-    }    
-},
-{
-    timestamps:true
-});
+    highlight: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-export = model<IExam>('Exam',ExamSchema);
+export = model<IExam>("Exam", ExamSchema);
