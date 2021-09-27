@@ -1,13 +1,5 @@
 import { ApolloError } from 'apollo-server';
-import {
-  create,
-  list,
-  update,
-  remove,
-  findById,
-  listHighlight,
-  search,
-} from '../../service/exam';
+import { create, list, update, remove, findById, listHighlight, search } from '../../service/exam';
 
 export default {
   Query: {
@@ -21,11 +13,9 @@ export default {
       }
     },
 
-    searchExam: async (_: any, { cursor, limit = 10, searchText = '' }: any) => {
+    searchExam: async (_: any, { searchText = '' }: any) => {
       try {
-        const pagination = cursor ? { _id: { $lt: cursor } } : {};
-        const r = await search(pagination, parseInt(limit, 10), searchText);
-        return r;
+        return await search(searchText);
       } catch (error: any) {
         throw new ApolloError(error);
       }

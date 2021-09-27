@@ -12,7 +12,8 @@ async function startServer() {
   const app = express();
   await connection();
   const apolloServer = new ApolloServer({
-   schema
+   schema,
+   introspection:true
   });
 
   await apolloServer.start();

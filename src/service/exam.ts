@@ -36,37 +36,27 @@ export const list = async (pagination: any, limit: number) => {
   }
 };
 
-export const search = async (pagination: any, limit: number, text: string) => {
+export const search = async (text: string) => {
   // eslint-disable-next-line no-useless-catch
   try {
+    const textWords = text.split(' ');
+    let orQuery: any[] = [];
+    textWords.forEach((x) => {
+      orQuery = orQuery.concat([
+        { title: { $regex: x, $options: 'i' } },
+        { searchTags: { $regex: x, $options: 'i' } },
+        { category: { $regex: x, $options: 'i' } },
+        { code: { $regex: x, $options: 'i' } },
+      ]);
+    });
+
     const query = {
       ...{ enabled: true },
-      ...pagination,
-      $or: [
-        { title: { $regex: text, $options: 'i' } },
-        { title: { $regex: text, $options: 'i' } },
-        { searchTags: { $regex: text, $options: 'i' } },
-        { category: { $regex: text, $options: 'i' } },
-        { code: { $regex: text, $options: 'i' } },
-      ],
+      $or: orQuery,
     };
 
-    let exams = await ExamModel.find(query)
-      .sort({ _id: -1 })
-      .limit(limit + 1);
-    const totalCount = await ExamModel.find(query).count();
-    const hasNextPage = exams.length > limit;
-    exams = hasNextPage ? exams.slice(0, -1) : exams;
-    const a = {
-      examFeed: exams,
-      totalCount,
-      pageInfo: {
-        nextPageCursor: hasNextPage ? exams[exams.length - 1].id : null,
-        hasNextPage,
-      },
-    };
-
-    return a;
+    const exams = await ExamModel.find(query).sort({ _id: -1 });
+    return exams;
   } catch (error) {
     throw error;
   }
@@ -93,11 +83,7 @@ export const update = async (id: any, input: any) => {
 export const remove = async (id: any) => {
   // eslint-disable-next-line no-useless-catch
   try {
-    return await ExamModel.findByIdAndUpdate(
-      id,
-      { enabled: false },
-      { new: true },
-    );
+    return await ExamModel.findByIdAndUpdate(id, { enabled: false }, { new: true });
   } catch (error) {
     throw error;
   }

@@ -40,7 +40,7 @@ const examTypedefs = gql`
  
   extend type Query {
     getAllExam(cursor:ID,limit:String): ExamFeed
-    searchExam(cursor:ID,limit:String,searchText:String): ExamFeed
+    searchExam(searchText:String): [Exam]
     getExamById(id:ID!): Exam
     getAllHighlight: [Exam]
 
