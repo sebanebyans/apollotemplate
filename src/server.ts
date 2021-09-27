@@ -16,15 +16,21 @@ async function startServer() {
   });
 
   await apolloServer.start();
-  apolloServer.applyMiddleware({app});
-  app.use(express.json());
-
-  app.get('/',({res}:any)=> {
-    console.log('get');
-    res.status(200).send({msg: 'Hello World!'});
-  });
-
-  app.listen(PORT, () => console.log(`running on ${PORT}`));
+  try{
+    
+    apolloServer.applyMiddleware({app});
+    app.use(express.json());
+  
+    app.get('/',({res}:any)=> {
+      console.log('get');
+      res.status(200).send({msg: 'Hello World!'});
+    });
+  
+    app.listen(PORT, () => console.log(`running on ${PORT}`));
+  }
+  catch (err){
+    console.log(err);
+  }
 }
 
 startServer();
