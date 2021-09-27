@@ -1,7 +1,4 @@
-import { examResolver } from "./examResolver";
-import { helloResolver } from "./helloResolver";
+import examResolver from './examResolver';
+import helloResolver from './helloResolver';
 
-export = [
-    helloResolver,
-    examResolver
-]
+export = [helloResolver, examResolver];

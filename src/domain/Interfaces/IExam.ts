@@ -9,5 +9,5 @@ export interface IExam {
     reason?:string,
     category?:string,
     enabled:boolean,
-    highlight: boolean    
+    highlight: boolean
 }

@@ -1,8 +1,9 @@
-import examModel from "../database/models/exam";
+import ExamModel from '../database/models/exam';
 
 export const create = async (exam: any) => {
+  // eslint-disable-next-line no-useless-catch
   try {
-    const newExam = new examModel(exam);
+    const newExam = new ExamModel(exam);
     const result = await newExam.save();
     return result;
   } catch (error) {
@@ -11,22 +12,22 @@ export const create = async (exam: any) => {
 };
 
 export const list = async (pagination: any, limit: number) => {
+  // eslint-disable-next-line no-useless-catch
   try {
     const query = { ...{ enabled: true }, ...pagination };
 
-    let exams = await examModel
-      .find(query)
+    let exams = await ExamModel.find(query)
       .sort({ _id: -1 })
       .limit(limit + 1);
-    let totalCount = await examModel.find(query).count();
+    const totalCount = await ExamModel.find(query).count();
     const hasNextPage = exams.length > limit;
     exams = hasNextPage ? exams.slice(0, -1) : exams;
     const a = {
       examFeed: exams,
-      totalCount: totalCount,
+      totalCount,
       pageInfo: {
         nextPageCursor: hasNextPage ? exams[exams.length - 1].id : null,
-        hasNextPage: hasNextPage,
+        hasNextPage,
       },
     };
 
@@ -37,36 +38,31 @@ export const list = async (pagination: any, limit: number) => {
 };
 
 export const search = async (pagination: any, limit: number, text: string) => {
+  // eslint-disable-next-line no-useless-catch
   try {
     const query = {
       ...{ enabled: true },
       ...pagination,
       $or: [
-        { title: { $regex: text, $options: "i" } },
-        { searchTags: { $regex: text, $options: "i" } },
-        { category: { $regex: text, $options: "i" } },
-        { code: { $regex: text, $options: "i" } },
+        { title: { $regex: text, $options: 'i' } },
+        { searchTags: { $regex: text, $options: 'i' } },
+        { category: { $regex: text, $options: 'i' } },
+        { code: { $regex: text, $options: 'i' } },
       ],
     };
 
-    //const b = await  examModel.find({ title: { $regex: "cas", $options: "i" }}).limit(10);
-
-    //console.clear();
-    // console.log("===",b);
-
-    let exams = await examModel
-      .find(query)
+    let exams = await ExamModel.find(query)
       .sort({ _id: -1 })
       .limit(limit + 1);
-    let totalCount = await examModel.find(query).count();
+    const totalCount = await ExamModel.find(query).count();
     const hasNextPage = exams.length > limit;
     exams = hasNextPage ? exams.slice(0, -1) : exams;
     const a = {
       examFeed: exams,
-      totalCount: totalCount,
+      totalCount,
       pageInfo: {
         nextPageCursor: hasNextPage ? exams[exams.length - 1].id : null,
-        hasNextPage: hasNextPage,
+        hasNextPage,
       },
     };
 
@@ -77,43 +73,40 @@ export const search = async (pagination: any, limit: number, text: string) => {
 };
 
 export const listHighlight = async () => {
+  // eslint-disable-next-line no-useless-catch
   try {
-    const list = await examModel.find({ enabled: true, highlight: true });
-    return list;
+    return await ExamModel.find({ enabled: true, highlight: true });
   } catch (error) {
     throw error;
   }
 };
 
 export const update = async (id: any, input: any) => {
+  // eslint-disable-next-line no-useless-catch
   try {
-    const list = await examModel.findByIdAndUpdate(
-      id,
-      { ...input },
-      { new: true }
-    );
-    return list;
+    return await ExamModel.findByIdAndUpdate(id, { ...input }, { new: true });
   } catch (error) {
     throw error;
   }
 };
 
 export const remove = async (id: any) => {
+  // eslint-disable-next-line no-useless-catch
   try {
-    const list = await examModel.findByIdAndUpdate(
+    return await ExamModel.findByIdAndUpdate(
       id,
       { enabled: false },
-      { new: true }
+      { new: true },
     );
-    return list;
   } catch (error) {
     throw error;
   }
 };
 
 export const findById = async (id: any) => {
+  // eslint-disable-next-line no-useless-catch
   try {
-    const exam = await examModel.findOne({ enabled: true, _id: id });
+    const exam = await ExamModel.findOne({ enabled: true, _id: id });
     return exam;
   } catch (error) {
     throw error;

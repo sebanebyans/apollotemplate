@@ -1,4 +1,4 @@
-import { ApolloError } from "apollo-server";
+import { ApolloError } from 'apollo-server';
 import {
   create,
   list,
@@ -6,27 +6,25 @@ import {
   remove,
   findById,
   listHighlight,
-  search
-} from "../../service/exam";
+  search,
+} from '../../service/exam';
 
-export const examResolver = {
+export default {
   Query: {
     getAllExam: async (_: any, { cursor, limit = 10 }: any) => {
       try {
-      
-        const pagination=  cursor ? {_id: {'$lt': cursor} } : {};     
-        const r = await list(pagination,parseInt(limit));
+        const pagination = cursor ? { _id: { $lt: cursor } } : {};
+        const r = await list(pagination, parseInt(limit, 10));
         return r;
       } catch (error: any) {
         throw new ApolloError(error);
       }
     },
-    
-    searchExam: async (_: any, { cursor, limit = 10,searchText="" }: any) => {
+
+    searchExam: async (_: any, { cursor, limit = 10, searchText = '' }: any) => {
       try {
-      
-        const pagination=  cursor ? {_id: {'$lt': cursor} } : {};     
-        const r = await search(pagination,parseInt(limit),searchText);
+        const pagination = cursor ? { _id: { $lt: cursor } } : {};
+        const r = await search(pagination, parseInt(limit, 10), searchText);
         return r;
       } catch (error: any) {
         throw new ApolloError(error);
@@ -40,7 +38,7 @@ export const examResolver = {
         throw new ApolloError(error);
       }
     },
-    getAllHighlight: async (_: any) => {
+    getAllHighlight: async () => {
       try {
         const r = await listHighlight();
         return r;
@@ -52,8 +50,9 @@ export const examResolver = {
 
   Mutation: {
     createExam: async (_: any, { input }: any) => {
+      // eslint-disable-next-line no-useless-catch
       try {
-        const r = await create(input);
+        await create(input);
         return input;
       } catch (error) {
         throw error;
@@ -61,6 +60,7 @@ export const examResolver = {
     },
 
     updateExam: async (_: any, { id, input }: any) => {
+      // eslint-disable-next-line no-useless-catch
       try {
         const r = await update(id, input);
         return r;
@@ -70,6 +70,7 @@ export const examResolver = {
     },
 
     removeExam: async (_: any, { id }: any) => {
+      // eslint-disable-next-line no-useless-catch
       try {
         const r = await remove(id);
         return r;

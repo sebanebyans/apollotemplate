@@ -1,6 +1,6 @@
-import { gql } from "apollo-server";
+import { gql } from 'apollo-server';
 
-export const helloTypedefs = gql`
+const helloTypedefs = gql`
   type Hello {
     name: String
   }
@@ -8,6 +8,6 @@ export const helloTypedefs = gql`
   extend type Query {
     getHello: [Hello]
   }
-
- 
 `;
+
+export = helloTypedefs;

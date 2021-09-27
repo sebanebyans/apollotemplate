@@ -1,24 +1,16 @@
-
-const {gql} = require('apollo-server');
-import { commonsTypedefs } from './commons';
-import { examTypedefs } from "./examTypedefs";
-import { helloTypedefs } from "./helloTypedefs";
-
+import { gql } from 'apollo-server';
+import commonsTypedefs from './commons';
+import examTypedefs from './examTypedefs';
+import helloTypedefs from './helloTypedefs';
 
 const typeDefs = gql`
+  scalar Date
 
-    scalar Date
-
-    type Query {
-        _: String
-    }
-    type Mutation{
-        _:String
-    }
-`
-export = [
-    typeDefs,
-    examTypedefs,
-    helloTypedefs,
-    commonsTypedefs
-]
+  type Query {
+    _: String
+  }
+  type Mutation {
+    _: String
+  }
+`;
+export = [typeDefs, examTypedefs, helloTypedefs, commonsTypedefs];

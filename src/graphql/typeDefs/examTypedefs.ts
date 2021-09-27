@@ -1,7 +1,6 @@
-import { gql } from "apollo-server";
+import { gql } from 'apollo-server';
 
-
-export const examTypedefs = gql`
+const examTypedefs = gql`
 
   type Exam  {  
     id: ID!
@@ -53,3 +52,5 @@ export const examTypedefs = gql`
     removeExam(id:ID!):Exam
   }
 `;
+
+export = examTypedefs;

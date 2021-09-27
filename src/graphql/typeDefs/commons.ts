@@ -1,7 +1,10 @@
-import { gql } from "apollo-server";
-export const commonsTypedefs = gql`
+import { gql } from 'apollo-server';
+
+const commonsTypedefs = gql`
   type PageInfo {
     nextPageCursor: String
     hasNextPage: Boolean
   }
 `;
+
+export = commonsTypedefs;
