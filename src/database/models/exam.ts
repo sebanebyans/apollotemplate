@@ -2,6 +2,7 @@ import {IExam} from '../../domain/Interfaces/IExam';
 import { Schema, model } from 'mongoose';
 
 
+
 const ExamSchema = new Schema<IExam>({
     title: {
         type: String,      

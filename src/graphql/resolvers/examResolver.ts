@@ -6,6 +6,7 @@ import {
   remove,
   findById,
   listHighlight,
+  search
 } from "../../service/exam";
 
 export const examResolver = {
@@ -15,6 +16,17 @@ export const examResolver = {
       
         const pagination=  cursor ? {_id: {'$lt': cursor} } : {};     
         const r = await list(pagination,parseInt(limit));
+        return r;
+      } catch (error: any) {
+        throw new ApolloError(error);
+      }
+    },
+    
+    searchExam: async (_: any, { cursor, limit = 10,searchText="" }: any) => {
+      try {
+      
+        const pagination=  cursor ? {_id: {'$lt': cursor} } : {};     
+        const r = await search(pagination,parseInt(limit),searchText);
         return r;
       } catch (error: any) {
         throw new ApolloError(error);

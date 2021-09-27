@@ -32,7 +32,7 @@ export const examTypedefs = gql`
   }
 
   type ExamFeed {
-    userFeed: [Exam!]
+    examFeed: [Exam!]
     pageInfo: PageInfo!
     totalCount: Int!
 
@@ -41,8 +41,10 @@ export const examTypedefs = gql`
  
   extend type Query {
     getAllExam(cursor:ID,limit:String): ExamFeed
+    searchExam(cursor:ID,limit:String,searchText:String): ExamFeed
     getExamById(id:ID!): Exam
     getAllHighlight: [Exam]
+
   }
 
   extend type Mutation {
