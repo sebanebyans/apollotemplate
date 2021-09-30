@@ -10,4 +10,5 @@ export interface IExam {
     category?:string,
     enabled:boolean,
     highlight: boolean
+    isFast:boolean
 }

@@ -1,4 +1,4 @@
-import ExamModel from '../database/models/exam';
+import {ExamModel} from '../database/models/exam';
 
 export const create = async (exam: any) => {
   // eslint-disable-next-line no-useless-catch

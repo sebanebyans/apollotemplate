@@ -5,19 +5,25 @@ const ExamSchema = new Schema<IExam>(
   {
     title: {
       type: String,
+      required:true,
+      
     },
     price: {
       type: Number,
+      required:true,
     },
     description: {
       type: String,
+      required:true,
     },
     resultTime: {
       type: String,
+      required:true,
     },
     code: {
       type: String,
       unique: true,
+      required:true,
     },
     searchTags: [String],
     tags: [String],
@@ -35,10 +41,14 @@ const ExamSchema = new Schema<IExam>(
       type: Boolean,
       default: false,
     },
+    isFast: {
+      type:Boolean,
+      required:true,
+    }
   },
   {
     timestamps: true,
   }
 );
 
-export = model<IExam>("Exam", ExamSchema);
+export const ExamModel = model<IExam>("Exam", ExamSchema);
