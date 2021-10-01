@@ -1,0 +1,44 @@
+{
+  "valid": {
+    "title": "examen test 1",
+    "price": 1000,
+    "description": "Descripción de examen test 1",
+    "resultTime": "Tiempo de entrega 12hrs",
+    "code": "0101010101",
+    "searchTags": ["examen,PCR,covid"],
+    "tags": null,
+    "reason": "contacto estrecho",
+    "category": "categoria 1",
+    "enabled": true,
+    "highlight": true,
+    "isFast": true
+  },
+  "valid2": {
+    "title": "examen test 1",
+    "price": 1000,
+    "description": "Descripción de examen test 1",
+    "resultTime": "Tiempo de entrega 12hrs",
+    "code": "0101010101",
+    "searchTags": ["examen,PCR,covid,sangre"],
+    "tags": null,
+    "reason": "contacto estrecho",
+    "category": "categoria 1",
+    "enabled": true,
+    "highlight": true,
+    "isFast": true
+  },
+  "invalid": {
+   
+    "price": 1000,
+    "description": "Descripción de examen test 1",
+    "resultTime": "Tiempo de entrega 12hrs",
+    "code": "0101010101",
+    "searchTags": ["examen,PCR,covid,sangre"],
+    "tags": null,
+    "reason": "contacto estrecho",
+    "category": "categoria 1",
+    "enabled": true,
+    "highlight": true,
+    "isFast": true
+  }
+}

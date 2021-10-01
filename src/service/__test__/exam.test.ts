@@ -1,64 +1,69 @@
-import {ExamModel} from '../../database/models/exam';
-import  {
-  dbConnect,
-  dbDisconnect,
-}  from '../../utils/test-utils/dbhandler';
+import { ExamModel } from '../../database/models/exam';
+import examMock from '../../utils/test-utils/examMock.json';
+import { dbConnect, dbDisconnect } from '../../utils/test-utils/dbhandler';
+import {search} from '../exam';
 
 beforeAll(async () => dbConnect());
 afterAll(async () => dbDisconnect());
 
 describe('exam Model Test Suite', () => {
-  test('should validate saving a new student user successfully', async () => {
 
   
-     const exam = new ExamModel({     
-      //   local: fakeUserData,
-    //   role: fakeUserData.role,
+  test('should validate exam Schema', async () => {
+    let exam = new ExamModel({
+      ...examMock.invalid,
     });
-    const exam2 = new ExamModel({ 
-      
-     //   local: fakeUserData,
-   //   role: fakeUserData.role,
-   });
-    const newExam = await exam.save();
-    const newExam2 = await exam2.save();
-
-     expect(newExam._id).toBeDefined();
-     expect(newExam2._id).toBeDefined();
-        // validateNotEmpty(savedStudentUser);
-
-    // validateStringEquality(savedStudentUser.role, fakeUserData.role);
-    // validateStringEquality(savedStudentUser.local.email, fakeUserData.email);
-    // validateStringEquality(
-    //   savedStudentUser.local.username,
-    //   fakeUserData.username
-    // );
-    // validateStringEquality(
-    //   savedStudentUser.local.password,
-    //   fakeUserData.password
-    // );
-    // validateStringEquality(
-    //   savedStudentUser.local.firstName,
-    //   fakeUserData.firstName
-    // );
-    // validateStringEquality(
-    //   savedStudentUser.local.lastName,
-    //   fakeUserData.lastName
-    // );
+    expect(async () => await exam.save()).rejects.toThrow(
+      'Exam validation failed: title: Path `title` is required.'
+    );
   });
 
-  // test('should validate MongoError duplicate error with code 11000', async () => {
-  //   expect.assertions(4);
-  //   const validStudentUser = new User({
-  //     local: fakeUserData,
-  //     role: fakeUserData.role,
-  //   });
+  test('should validate saving a new exam ', async () => {
+    let exam = new ExamModel({
+      ...examMock.valid2,
+    });
+    const newExam = await exam.save();
+    expect(newExam._id).toBeDefined();
+  });
 
-  //   try {
-  //     await validStudentUser.save();
-  //   } catch (error) {
-  //     const { name, code } = error;
-  //     validateMongoDuplicationError(name, code);
-  //   }
-  // });
+  test('should validate not saving exams with same code ', async () => {
+    let exam = new ExamModel({
+      ...examMock.valid,
+    });
+
+    await expect(async () => {
+      const newExam = await exam.save();
+    }).rejects.toThrowError(/duplicate/);
+  });
+
+  test('should validate update exams', async () => {
+    examMock.valid.code = "999";
+    let exam = new ExamModel({
+      ...examMock.valid,
+    });
+    const newExam = await exam.save();
+    newExam.price = 999;    
+    const updatedExam = await ExamModel.findByIdAndUpdate(newExam._id, exam,{ new: true });
+    expect(updatedExam.price).toEqual(999);
+  });
+
+  test('should validate get highlights exams', async () => {
+  
+    const highlight = await ExamModel.find({'highlight':true});     
+    expect(highlight.length).toEqual(2);
+  });
+
+  test('should validate search by pne patters', async () => {
+
+    const examResults = await search("sangre")
+    expect(examResults.length).toEqual(1);
+  });
+
+  test('should validate search by multiples patters', async () => {
+
+    const examResults = await search("pcr")
+    expect(examResults.length).toEqual(2);
+  });
+
+ 
 });
