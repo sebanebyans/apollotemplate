@@ -31,7 +31,7 @@ const examTypedefs = gql`
     isFast:Boolean
   }
 
-  # representa los datos necesarios para gregar un nuevo examen
+  "representa los datos necesarios para gregar un nuevo examen"
   input InputExam  {
      """Valor que se cobra por tomar el examen """
     title: String
@@ -73,8 +73,10 @@ const examTypedefs = gql`
  
 
   extend type Query {
-    "Obtiene todos los examanes que se encuentren activos, puede paginarse"
-    getAllExam("""Id del comienzo de la siguiente página"""cursor:ID,"""cantidad de elementos por página """limit:String): ExamFeed
+    "Obtiene todos los examanes que se encuentren activos"
+    getAllExam: [Exam]
+     "Obtiene todos los examanes que se encuentren activos, puede paginarse"
+    getAllExamPaged("""Id del comienzo de la siguiente página"""cursor:ID,"""cantidad de elementos por página """limit:String): ExamFeed
     "permite buscar examanes por título, código, categoria y tags" 
     searchExam("texto a buscar" searchText:String): [Exam]
     "Obtiene un examen por ID"

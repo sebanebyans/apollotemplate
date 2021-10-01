@@ -1,12 +1,22 @@
 import { ApolloError } from 'apollo-server';
-import { create, list, update, remove, findById, listHighlight, search } from '../../service/exam';
+import { create, list, update, remove, findById, listHighlight, search, listPaged } from '../../service/exam';
 
 export default {
   Query: {
-    getAllExam: async (_: any, { cursor, limit = 10 }: any) => {
+    getAllExam: async () => {
+      try {
+      
+        const r = await list();
+        return r;
+      } catch (error: any) {
+        throw new ApolloError(error);
+      }
+    },
+
+    getAllExamPaged: async (_: any, { cursor, limit = 10 }: any) => {
       try {
         const pagination = cursor ? { _id: { $lt: cursor } } : {};
-        const r = await list(pagination, parseInt(limit, 10));
+        const r = await listPaged(pagination, parseInt(limit, 10));
         return r;
       } catch (error: any) {
         throw new ApolloError(error);

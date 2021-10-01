@@ -11,7 +11,20 @@ export const create = async (exam: any) => {
   }
 };
 
-export const list = async (pagination: any, limit: number) => {
+export const list = async () => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    const query = { enabled: true};
+    let exams = await ExamModel.find(query)
+      .sort({ _id: -1 })      
+      
+      return exams;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export const listPaged = async (pagination: any, limit: number) => {
   // eslint-disable-next-line no-useless-catch
   try {
     const query = { ...{ enabled: true }, ...pagination };
@@ -21,7 +34,7 @@ export const list = async (pagination: any, limit: number) => {
     const totalCount = await ExamModel.find(query).count();
     const hasNextPage = exams.length > limit;
     exams = hasNextPage ? exams.slice(0, -1) : exams;
-    const a = {
+    const examPage = {
       examFeed: exams,
       totalCount,
       pageInfo: {
@@ -30,7 +43,7 @@ export const list = async (pagination: any, limit: number) => {
       },
     };
 
-    return a;
+    return examPage;
   } catch (error) {
     throw error;
   }
