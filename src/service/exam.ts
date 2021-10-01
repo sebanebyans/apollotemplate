@@ -1,8 +1,10 @@
 import {ExamModel} from '../database/models/exam';
+import encode from '../database/helpers/encode'; 
 
 export const create = async (exam: any) => {
   // eslint-disable-next-line no-useless-catch
   try {
+
     const newExam = new ExamModel(exam);
     const result = await newExam.save();
     return result;
@@ -38,7 +40,7 @@ export const listPaged = async (pagination: any, limit: number) => {
       examFeed: exams,
       totalCount,
       pageInfo: {
-        nextPageCursor: hasNextPage ? exams[exams.length - 1].id : null,
+        nextPageCursor: hasNextPage ? encode.stringToBase64(exams[exams.length - 1].id) : null,
         hasNextPage,
       },
     };
@@ -52,7 +54,8 @@ export const listPaged = async (pagination: any, limit: number) => {
 export const search = async (text: string) => {
   // eslint-disable-next-line no-useless-catch
   try {
-    const textWords = text.split(' ');
+    const textWords = text.split(' ').filter(x=> x); //quita los elementos vacios o undefined
+    console.log(textWords);
     let orQuery: any[] = [];
     textWords.forEach((x) => {
       orQuery = orQuery.concat([
