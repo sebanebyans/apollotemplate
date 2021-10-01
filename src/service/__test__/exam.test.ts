@@ -7,7 +7,7 @@ import  {
 beforeAll(async () => dbConnect());
 afterAll(async () => dbDisconnect());
 
-describe('User Model Test Suite', () => {
+describe('exam Model Test Suite', () => {
   test('should validate saving a new student user successfully', async () => {
 
   
@@ -16,7 +16,7 @@ describe('User Model Test Suite', () => {
     //   role: fakeUserData.role,
     });
     const exam2 = new ExamModel({ 
-      "title": "algo"    
+      
      //   local: fakeUserData,
    //   role: fakeUserData.role,
    });

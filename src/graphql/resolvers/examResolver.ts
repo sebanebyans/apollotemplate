@@ -1,5 +1,6 @@
 import { ApolloError } from 'apollo-server';
 import { create, list, update, remove, findById, listHighlight, search, listPaged } from '../../service/exam';
+import encode from '../../database/helpers/encode'; 
 
 export default {
   Query: {
@@ -15,7 +16,7 @@ export default {
 
     getAllExamPaged: async (_: any, { cursor, limit = 10 }: any) => {
       try {
-        const pagination = cursor ? { _id: { $lt: cursor } } : {};
+        const pagination = cursor ? { _id: { $lt: encode.base64ToSring(cursor) } } : {};
         const r = await listPaged(pagination, parseInt(limit, 10));
         return r;
       } catch (error: any) {
@@ -51,7 +52,12 @@ export default {
   Mutation: {
     createExam: async (_: any, { input }: any) => {
       // eslint-disable-next-line no-useless-catch
+
+      
       try {
+
+        
+        //repo
         await create(input);
         return input;
       } catch (error) {
