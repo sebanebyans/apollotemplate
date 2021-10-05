@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { ExamModel } from '../../database/models/exam';
+import ExamModel from '../../database/models/exam';
 import examMock from '../../utils/test-utils/examMock.json';
 import { dbConnect, dbDisconnect } from '../../utils/test-utils/dbhandler';
 import { search } from '../exam';

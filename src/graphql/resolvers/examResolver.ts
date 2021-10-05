@@ -1,12 +1,11 @@
 import { ApolloError } from 'apollo-server';
-import { create, list, update, remove, findById, listHighlight, search, listPaged } from '../../service/exam';
+import { create, list, update, remove, findById, listHighlight, search, listPaged } from '../../repositories/exam';
 import encode from '../../database/helpers/encode'; 
 
 export default {
   Query: {
     getAllExam: async () => {
-      try {
-      
+      try {      
         const r = await list();
         return r;
       } catch (error: any) {
@@ -50,39 +49,20 @@ export default {
   },
 
   Mutation: {
-    createExam: async (_: any, { input }: any) => {
-      // eslint-disable-next-line no-useless-catch
-
-      
-      try {
-
-        
-        //repo
-        await create(input);
-        return input;
-      } catch (error) {
-        throw error;
-      }
+    createExam: async (_: any, { input }: any) => {     
+       const exam = await create(input);
+        return exam;     
     },
 
     updateExam: async (_: any, { id, input }: any) => {
-      // eslint-disable-next-line no-useless-catch
-      try {
-        const r = await update(id, input);
-        return r;
-      } catch (error) {
-        throw error;
-      }
+    const exam = await update(id, input)
+    return exam;
     },
 
-    removeExam: async (_: any, { id }: any) => {
-      // eslint-disable-next-line no-useless-catch
-      try {
-        const r = await remove(id);
-        return r;
-      } catch (error) {
-        throw error;
-      }
+    removeExam: async (_: any, { id }: any) => {    
+        const exam = await remove(id);
+        return exam;
+    
     },
   },
 };

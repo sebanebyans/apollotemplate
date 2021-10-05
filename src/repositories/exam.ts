@@ -1,4 +1,4 @@
-import { ExamModel } from '../database/models/exam';
+import ExamModel from '../database/models/exam';
 import encode from '../database/helpers/encode';
 
 export const create = async (exam: any) => {

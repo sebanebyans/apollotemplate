@@ -51,4 +51,4 @@ const ExamSchema = new Schema<IExam>(
   }
 );
 
-export const ExamModel = model<IExam>("Exam", ExamSchema);
+export default model<IExam>("Exam", ExamSchema);
