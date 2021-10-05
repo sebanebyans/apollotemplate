@@ -1,5 +1,5 @@
 import { ApolloError } from 'apollo-server';
-import { create, list, update, remove, findById, listHighlight, search, listPaged } from '../../repositories/exam';
+import { create, list, update, remove, findById, listHighlight, search, listPaged } from '../../services/exam';
 import encode from '../../database/helpers/encode'; 
 
 export default {

@@ -2,7 +2,7 @@
 import ExamModel from '../../database/models/exam';
 import examMock from '../../utils/test-utils/examMock.json';
 import { dbConnect, dbDisconnect } from '../../utils/test-utils/dbhandler';
-import { search } from '../exam';
+import { search } from '../../services/exam';
 
 beforeAll(async () => dbConnect());
 afterAll(async () => dbDisconnect());

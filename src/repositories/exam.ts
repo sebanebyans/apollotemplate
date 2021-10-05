@@ -1,7 +1,7 @@
 import ExamModel from '../database/models/exam';
 import encode from '../database/helpers/encode';
 
-export const create = async (exam: any) => {
+export const createExam = async (exam: any) => {
   // eslint-disable-next-line no-useless-catch
   try {
     const newExam = new ExamModel(exam);
@@ -12,7 +12,7 @@ export const create = async (exam: any) => {
   }
 };
 
-export const list = async () => {
+export const listExam = async () => {
   // eslint-disable-next-line no-useless-catch
   try {
     const query = { enabled: true };
@@ -24,7 +24,7 @@ export const list = async () => {
   }
 };
 
-export const listPaged = async (pagination: any, limit: number) => {
+export const listExamPaged = async (pagination: any, limit: number) => {
   // eslint-disable-next-line no-useless-catch
   try {
     const query = { ...{ enabled: true }, ...pagination };
@@ -49,7 +49,7 @@ export const listPaged = async (pagination: any, limit: number) => {
   }
 };
 
-export const search = async (text: string) => {
+export const searchExam = async (text: string) => {
   // eslint-disable-next-line no-useless-catch
   try {
     const textWords = text.split(' ').filter((x) => x);
@@ -76,7 +76,7 @@ export const search = async (text: string) => {
   }
 };
 
-export const listHighlight = async () => {
+export const listExamHighlight = async () => {
   // eslint-disable-next-line no-useless-catch
   try {
     return await ExamModel.find({ enabled: true, highlight: true });
@@ -85,7 +85,7 @@ export const listHighlight = async () => {
   }
 };
 
-export const update = async (id: any, input: any) => {
+export const updateExam = async (id: any, input: any) => {
   // eslint-disable-next-line no-useless-catch
   try {
     return await ExamModel.findByIdAndUpdate(id, { ...input }, { new: true });
@@ -94,7 +94,7 @@ export const update = async (id: any, input: any) => {
   }
 };
 
-export const remove = async (id: any) => {
+export const removeExam = async (id: any) => {
   // eslint-disable-next-line no-useless-catch
   try {
     return await ExamModel.findByIdAndUpdate(id, { enabled: false }, { new: true });
@@ -103,7 +103,7 @@ export const remove = async (id: any) => {
   }
 };
 
-export const findById = async (id: any) => {
+export const findExamById = async (id: any) => {
   // eslint-disable-next-line no-useless-catch
   try {
     const exam = await ExamModel.findOne({ enabled: true, _id: id });
